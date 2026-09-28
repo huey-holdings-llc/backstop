@@ -14,6 +14,15 @@ as they were, so an existing install is unaffected.
 
 ### Fixed
 
+The popup groups drifting files under any folder two segments deep, not only
+under `~/.config`, `~/.cache` and `~/.local/{share,state,bin}`. A new tree
+anywhere else, such as the 188 files claude.ai syncs into
+`~/.claude/skills/synced/`, was listed one file per row with one click each,
+even though the engine already accepted the whole folder in a single `ignore`
+or `allow`. The folder row now appears wherever the engine would take the
+folder, and the caret still expands it to single files. The depth-one rule is
+unchanged: `~/.config/` and `~/bin/` can still never be silenced by one click.
+
 `self-test --real`, the weekly unit, no longer fails on a machine whose own
 snapshot timer is armed. Under `--real` the test suite drops the stand-in
 tools it normally uses, and `timer status` asks systemd about the real timer

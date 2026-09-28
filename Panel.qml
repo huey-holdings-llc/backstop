@@ -113,21 +113,25 @@ Panel {
   readonly property bool timerKnown: !!(st && st.timers_checked)
   readonly property bool timerArmed: !!(st && st.timer_enabled && st.timer_active)
 
-  // Folder bucket for a drift path: per-app under the XDG-ish roots, null for
-  // anything else. A key must be at least two segments deep, because the
-  // engine refuses a depth-1 folder target by design (one click must never be
-  // able to silence a whole report, lib/widget.sh drift_has_under). Grouping
-  // ~/bin/foo and ~/bin/bar under "~/bin/" therefore built a row whose two
-  // buttons could only ever fail, with advice ("refresh and retry") that could
-  // never work. Those files are listed individually instead, where their own
-  // buttons do work.
+  // Folder bucket for a drift path: the first two segments (per-app under
+  // ~/.config, ~/.cache and any other top-level directory), three under
+  // ~/.local/{share,state,bin}, null for anything shallower. A key must be at
+  // least two segments deep, because the engine refuses a depth-1 folder
+  // target by design (one click must never be able to silence a whole report,
+  // lib/widget.sh drift_has_under). Grouping ~/bin/foo and ~/bin/bar under
+  // "~/bin/" therefore built a row whose two buttons could only ever fail,
+  // with advice ("refresh and retry") that could never work. Those files are
+  // listed individually instead, where their own buttons do work.
+  // Through 0.8.0 only the XDG roots formed groups and every other path
+  // returned null, so a tree under any other dot-directory (188 files under
+  // ~/.claude/skills/synced/) listed file by file, one click each, while the
+  // engine would have taken the folder in one. The engine's gate is the only
+  // depth rule there is, so the bucket follows it.
   function groupKey(path) {
     var p = String(path).replace(/^~\//, "").replace(/\/$/, "")
     var segs = p.split("/")
-    var take = 1
-    if (segs[0] === ".config" || segs[0] === ".cache") take = 2
-    else if (segs[0] === ".local" && segs.length > 1 && (segs[1] === "share" || segs[1] === "state" || segs[1] === "bin")) take = 3
-    if (take < 2) return null
+    var take = 2
+    if (segs[0] === ".local" && segs.length > 1 && (segs[1] === "share" || segs[1] === "state" || segs[1] === "bin")) take = 3
     if (segs.length <= take) return null
     return "~/" + segs.slice(0, take).join("/") + "/"
   }
