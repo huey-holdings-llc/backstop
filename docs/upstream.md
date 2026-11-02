@@ -30,8 +30,9 @@ on the host; the test suite runs in the ob-trial container.
 | 7 | the push refusal says where a secret is, never what (his open item from 2026-09-30) | merged 2026-10-30, not yet released |
 | 8 | the usage text names every verb a person runs | open, awaiting review |
 | 9 | a refusal raised while reading the refs never prints a matching ref name (his review 86 item) | open, awaiting review |
+| 10 | Breno's own: encrypts the secrets group with age, step 1 of 5 of his secrets plan | open, not ours, unreviewed |
 
-PR 5 is Breno's own (secret scan before the sync commit). He holds `main` at
+PRs 5 and 10 are Breno's own (PR 5 is the secret scan before the sync commit). He holds `main` at
 each release commit until the marketplace verifies it, so open PRs wait for
 that. Container baseline on his `main` at 928b589: 1639 passed, 2
 failed.
@@ -39,6 +40,10 @@ failed.
 Queue after these, in order: the trust record with non-GitHub blocking (rest
 of Phase 1), starting as a short design issue because it needs a new home for
 the record, then the credential filename gate (his Phase 2).
+
+PR 10 does not touch `lib/destinations.sh` or `lib/secrets.sh`, so this order
+stands. PRs 8, 9 and 10 all append to the end of his `docs/PLAN.md`, so later
+merges conflict there only.
 
 ## Where the working material lives
 
