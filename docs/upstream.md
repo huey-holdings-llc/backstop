@@ -18,7 +18,7 @@ docs. He reviews every PR, so work arrives in small pieces in his documented
 phase order. Two PRs open at once, at most. Nothing quickshell-related runs
 on the host; the test suite runs in the ob-trial container.
 
-## Pull requests, as of 2026-11-01
+## Pull requests, as of 2026-11-04
 
 | PR | What | State |
 |---|---|---|
@@ -26,24 +26,23 @@ on the host; the test suite runs in the ob-trial container.
 | 2 | collect no longer aborts with no foreign packages | merged 2026-09-20, released 0.4.7 |
 | 3 | sync scans staging with the deny-list before publishing | merged 2026-10-22 after four rounds Breno pushed himself, released 0.4.8 |
 | 4 | error veto covers every package list (asked for by Breno) | merged 2026-10-21, released 0.4.8 |
-| 6 | the panel drives its own bundled CLI before PATH | merged 2026-10-30, not yet released |
-| 7 | the push refusal says where a secret is, never what (his open item from 2026-09-30) | merged 2026-10-30, not yet released |
-| 8 | the usage text names every verb a person runs | open, awaiting review |
-| 9 | a refusal raised while reading the refs never prints a matching ref name (his review 86 item) | open, awaiting review |
-| 10 | Breno's own: encrypts the secrets group with age, step 1 of 5 of his secrets plan | open, not ours, unreviewed |
+| 6 | the panel drives its own bundled CLI before PATH | merged 2026-10-30, released 0.5.0 |
+| 7 | the push refusal says where a secret is, never what (his open item from 2026-09-30) | merged 2026-10-30, released 0.5.0 |
+| 8 | the usage text names every verb a person runs | merged 2026-11-02, released 0.5.0 |
+| 9 | a refusal raised while reading the refs never prints a matching ref name (his review 86 item) | merged 2026-11-02, released 0.5.0 |
+| 13 | the usage-text spec reads every arm of the dispatch; `sync` line says verify gates the commit (his PR 8 follow-ups) | open, awaiting review |
+| 14 | the deep tag chain spec refuses only the ref under test (his PR 9 follow-up) | open, awaiting review |
 
-PRs 5 and 10 are Breno's own (PR 5 is the secret scan before the sync commit). He holds `main` at
-each release commit until the marketplace verifies it, so open PRs wait for
-that. Container baseline on his `main` at 928b589: 1639 passed, 2
-failed.
+PRs 5, 10, 11 and 12 are Breno's own (10 and 11, the age-encrypted secrets
+group, shipped in 0.5.0; 12 is open). He holds `main` at each release commit
+until the marketplace verifies it, so open PRs wait for that. Container
+baseline on his `main` at 427e49f: 1773 passed, 4 failed (the container now
+installs `age`; two of the four are a Config TUI spec that only fails under
+full-suite load).
 
-Queue after these, in order: the trust record with non-GitHub blocking (rest
-of Phase 1), starting as a short design issue because it needs a new home for
-the record, then the credential filename gate (his Phase 2).
-
-PR 10 does not touch `lib/destinations.sh` or `lib/secrets.sh`, so this order
-stands. PRs 8, 9 and 10 all append to the end of his `docs/PLAN.md`, so later
-merges conflict there only.
+Issue 15 asks Breno where the push trust record should live (rest of Phase 1).
+No code until he answers. After that, the credential filename gate (his
+Phase 2).
 
 ## Where the working material lives
 
