@@ -18,7 +18,7 @@ docs. He reviews every PR, so work arrives in small pieces in his documented
 phase order. Two PRs open at once, at most. Nothing quickshell-related runs
 on the host; the test suite runs in the ob-trial container.
 
-## Pull requests, as of 2026-11-04
+## Pull requests, as of 2026-11-20
 
 | PR | What | State |
 |---|---|---|
@@ -30,19 +30,23 @@ on the host; the test suite runs in the ob-trial container.
 | 7 | the push refusal says where a secret is, never what (his open item from 2026-09-30) | merged 2026-10-30, released 0.5.0 |
 | 8 | the usage text names every verb a person runs | merged 2026-11-02, released 0.5.0 |
 | 9 | a refusal raised while reading the refs never prints a matching ref name (his review 86 item) | merged 2026-11-02, released 0.5.0 |
-| 13 | the usage-text spec reads every arm of the dispatch; `sync` line says verify gates the commit (his PR 8 follow-ups) | open, awaiting review |
-| 14 | the deep tag chain spec refuses only the ref under test (his PR 9 follow-up) | open, awaiting review |
+| 13 | the usage-text spec reads every arm of the dispatch; `sync` line says verify gates the commit (his PR 8 follow-ups) | merged 2026-11-05, released 0.5.1 |
+| 14 | the deep tag chain spec refuses only the ref under test (his PR 9 follow-up) | merged 2026-11-05, released 0.5.1 |
+| 18 | push failure specs drive a private GitHub remote, not an unchecked host (prepares #15) | open, awaiting review |
+| 19 | the privacy gate reads the host git connects to (`https://evil.com?@github.com/o/r` was checked as GitHub) | open, awaiting review |
 
-PRs 5, 10, 11 and 12 are Breno's own (10 and 11, the age-encrypted secrets
-group, shipped in 0.5.0; 12 is open). He holds `main` at each release commit
-until the marketplace verifies it, so open PRs wait for that. Container
-baseline on his `main` at 427e49f: 1773 passed, 4 failed (the container now
-installs `age`; two of the four are a Config TUI spec that only fails under
-full-suite load).
+PRs 5, 10, 11, 12, 16 and 17 are Breno's own or outside contributors' (12 shipped
+in 0.5.1). He holds `main` at each release commit until the marketplace
+verifies it, so open PRs wait for that; 0.5.1 is in that wait now. Container
+baseline on his `main` at 97aac67: 1787 passed, 2 failed (VM preflight and
+title-row eliding; a Config TUI spec also fails now and then under full-suite
+load and passes alone).
 
-Issue 15 asks Breno where the push trust record should live (rest of Phase 1).
-No code until he answers. After that, the credential filename gate (his
-Phase 2).
+Issue 15 is answered: the push trust record is `push-trust.json` in the state
+dir, written by `omabackup remote accept`, one PR. That PR is built and
+verified locally (`feat/refuse-untrusted-push-host`, local paths left ungated
+as its one question) and waits for a free slot; it depends on PR 18. After
+that, the credential filename gate (his Phase 2).
 
 ## Where the working material lives
 
